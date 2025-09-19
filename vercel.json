@@ -1,0 +1,52 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "framework": "nextjs",
+  "functions": {
+    "src/app/**/*.tsx": {
+      "maxDuration": 30
+    }
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/calculator/emi",
+      "destination": "/calculator/emi-loan",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/valuation",
+      "destination": "/calculator/business-valuation",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/roi",
+      "destination": "/calculator/roi-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/break-even",
+      "destination": "/calculator/break-even-analysis",
+      "permanent": true
+    }
+  ]
+}
+
