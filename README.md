@@ -2,6 +2,8 @@
 
 A comprehensive Next.js application providing professional business calculators for EMI, ROI, business valuation, and break-even analysis. Built with TypeScript, TailwindCSS, and optimized for performance and SEO.
 
+🌐 **Live Demo**: [bizzcalculator.com](https://bizzcalculator.com)
+
 ## Features
 
 ### 🧮 Calculators
