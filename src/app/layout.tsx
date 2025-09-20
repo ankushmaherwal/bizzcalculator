@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
 import { ConsentWrapper } from "@/components/ConsentWrapper";
 
@@ -40,11 +39,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <head>
-        <Script
+        <script
           async
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_AD_CLIENT_ID}`}
           crossOrigin="anonymous"
-        />
+        ></script>
       </head>
       <body className="font-sans antialiased bg-gray-50">
         <ConsentWrapper>
