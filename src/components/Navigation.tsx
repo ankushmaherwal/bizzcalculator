@@ -40,6 +40,17 @@ export function Navigation() {
               <span>EMI Calculator</span>
             </Link>
             <Link 
+              href="/gratuity-calculator" 
+              className={`flex items-center space-x-1 transition-colors duration-200 ${
+                isActive('/gratuity-calculator') 
+                  ? 'text-blue-600 font-semibold' 
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              <Gift className="h-4 w-4" />
+              <span>Gratuity Calculator</span>
+            </Link>
+            <Link 
               href="/business-valuation" 
               className={`flex items-center space-x-1 transition-colors duration-200 ${
                 isActive('/business-valuation') 
@@ -71,17 +82,6 @@ export function Navigation() {
             >
               <BarChart3 className="h-4 w-4" />
               <span>Break-Even Analysis</span>
-            </Link>
-            <Link 
-              href="/gratuity-calculator" 
-              className={`flex items-center space-x-1 transition-colors duration-200 ${
-                isActive('/gratuity-calculator') 
-                  ? 'text-blue-600 font-semibold' 
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              <Gift className="h-4 w-4" />
-              <span>Gratuity Calculator</span>
             </Link>
           </div>
           

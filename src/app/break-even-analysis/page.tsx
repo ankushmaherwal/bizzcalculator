@@ -3,6 +3,7 @@ import { Navigation } from '@/components/Navigation';
 import { SEO } from '@/components/SEO';
 import { BreakEvenCalculator } from '@/components/calculators/BreakEvenCalculator';
 import { AdUnit } from '@/components/AdUnit';
+import { AdsterraAdUnit } from '@/components/AdsterraAdUnit';
 import Link from 'next/link';
 
 interface BreakEvenPageProps {
@@ -60,10 +61,10 @@ export default async function BreakEvenPage({ searchParams }: BreakEvenPageProps
       
       <Navigation />
       
-      {/* Ad after header */}
+      {/* Adsterra Ad after header */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex justify-center">
-          <AdUnit className="max-w-4xl w-full" />
+          <AdsterraAdUnit className="max-w-4xl w-full" />
         </div>
       </div>
       

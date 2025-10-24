@@ -3,6 +3,7 @@ import { Navigation } from '@/components/Navigation';
 import { SEO } from '@/components/SEO';
 import { BusinessValuationCalculator } from '@/components/calculators/BusinessValuationCalculator';
 import { AdUnit } from '@/components/AdUnit';
+import { AdsterraAdUnit } from '@/components/AdsterraAdUnit';
 import Link from 'next/link';
 
 interface BusinessValuationPageProps {
@@ -62,10 +63,10 @@ export default async function BusinessValuationPage({ searchParams }: BusinessVa
       
       <Navigation />
       
-      {/* Ad after header */}
+      {/* Adsterra Ad after header */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex justify-center">
-          <AdUnit className="max-w-4xl w-full" />
+          <AdsterraAdUnit className="max-w-4xl w-full" />
         </div>
       </div>
       
