@@ -25,7 +25,7 @@ export function AdsterraAdUnit({ className = '' }: AdsterraAdUnitProps) {
   useEffect(() => {
     if (consent.ads && typeof window !== 'undefined') {
       try {
-        // Initialize Adsterra configuration
+        // Set up Adsterra configuration exactly as provided
         window.atOptions = {
           'key': '6cb2db769ea45b55473961cb9d425c80',
           'format': 'iframe',
@@ -34,19 +34,39 @@ export function AdsterraAdUnit({ className = '' }: AdsterraAdUnitProps) {
           'params': {}
         };
 
-        // Load Adsterra script
-        const script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.src = '//www.highperformanceformat.com/6cb2db769ea45b55473961cb9d425c80/invoke.js';
-        script.async = true;
-        
-        // Append to head
-        document.head.appendChild(script);
+        // Create the configuration script
+        const configScript = document.createElement('script');
+        configScript.type = 'text/javascript';
+        configScript.innerHTML = `
+          atOptions = {
+            'key': '6cb2db769ea45b55473961cb9d425c80',
+            'format': 'iframe',
+            'height': 90,
+            'width': 728,
+            'params': {}
+          };
+        `;
+
+        // Create the invoke script
+        const invokeScript = document.createElement('script');
+        invokeScript.type = 'text/javascript';
+        invokeScript.src = '//www.highperformanceformat.com/6cb2db769ea45b55473961cb9d425c80/invoke.js';
+        invokeScript.async = true;
+
+        // Append both scripts to the ad container
+        const adContainer = document.getElementById('adsterra-ad');
+        if (adContainer) {
+          adContainer.appendChild(configScript);
+          adContainer.appendChild(invokeScript);
+        }
 
         return () => {
-          // Cleanup script on unmount
-          if (document.head.contains(script)) {
-            document.head.removeChild(script);
+          // Cleanup scripts on unmount
+          if (adContainer && adContainer.contains(configScript)) {
+            adContainer.removeChild(configScript);
+          }
+          if (adContainer && adContainer.contains(invokeScript)) {
+            adContainer.removeChild(invokeScript);
           }
         };
       } catch (error) {

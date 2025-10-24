@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { Navigation } from '@/components/Navigation';
 import { SEO } from '@/components/SEO';
 import { EMICalculator } from '@/components/calculators/EMICalculator';
-import { AdUnit } from '@/components/AdUnit';
+// import { AdUnit } from '@/components/AdUnit'; // Commented out for now
 import { AdsterraAdUnit } from '@/components/AdsterraAdUnit';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
@@ -65,13 +65,13 @@ export default async function HomePage({ searchParams }: HomePageProps) {
       <Navigation />
       
       {/* Adsterra Ad after header */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
         <div className="flex justify-center">
           <AdsterraAdUnit className="max-w-4xl w-full" />
         </div>
       </div>
       
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/20 p-8 mb-16">
           <Suspense fallback={
             <div className="animate-pulse">
@@ -88,12 +88,12 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           </Suspense>
         </div>
 
-        {/* Center ad */}
-        <div className="mt-16 mb-16">
+        {/* Center ad - Commented out for now */}
+        {/* <div className="mt-16 mb-16">
           <div className="flex justify-center">
             <AdUnit className="max-w-4xl w-full" />
           </div>
-        </div>
+        </div> */}
 
         {/* Other Calculators Section */}
         <div className="mt-16">
