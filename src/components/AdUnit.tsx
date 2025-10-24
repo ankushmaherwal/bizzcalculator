@@ -19,7 +19,6 @@ export function AdUnit({ className = '' }: AdUnitProps) {
   useEffect(() => {
     if (consent.ads && typeof window !== 'undefined' && window.adsbygoogle) {
       try {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (window.adsbygoogle = window.adsbygoogle || []).push({});
       } catch (error) {
         console.error('Error loading ad:', error);

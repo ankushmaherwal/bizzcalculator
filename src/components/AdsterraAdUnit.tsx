@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useConsent } from '@/hooks/useConsent';
 
 declare global {
@@ -21,12 +21,34 @@ interface AdsterraAdUnitProps {
 
 export function AdsterraAdUnit({ className = '' }: AdsterraAdUnitProps) {
   const { consent } = useConsent();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Check if device is mobile
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     if (consent.ads && typeof window !== 'undefined') {
       try {
-        // Set up Adsterra configuration exactly as provided
-        window.atOptions = {
+        // Mobile ad configuration
+        const mobileConfig = {
+          'key': 'b280e8a46905b2b25be32dbed68140d7',
+          'format': 'iframe',
+          'height': 250,
+          'width': 300,
+          'params': {}
+        };
+
+        // Desktop ad configuration
+        const desktopConfig = {
           'key': '6cb2db769ea45b55473961cb9d425c80',
           'format': 'iframe',
           'height': 90,
@@ -34,15 +56,21 @@ export function AdsterraAdUnit({ className = '' }: AdsterraAdUnitProps) {
           'params': {}
         };
 
+        // Choose configuration based on device
+        const config = isMobile ? mobileConfig : desktopConfig;
+
+        // Set up Adsterra configuration
+        window.atOptions = config;
+
         // Create the configuration script
         const configScript = document.createElement('script');
         configScript.type = 'text/javascript';
         configScript.innerHTML = `
           atOptions = {
-            'key': '6cb2db769ea45b55473961cb9d425c80',
-            'format': 'iframe',
-            'height': 90,
-            'width': 728,
+            'key': '${config.key}',
+            'format': '${config.format}',
+            'height': ${config.height},
+            'width': ${config.width},
             'params': {}
           };
         `;
@@ -50,7 +78,7 @@ export function AdsterraAdUnit({ className = '' }: AdsterraAdUnitProps) {
         // Create the invoke script
         const invokeScript = document.createElement('script');
         invokeScript.type = 'text/javascript';
-        invokeScript.src = '//www.highperformanceformat.com/6cb2db769ea45b55473961cb9d425c80/invoke.js';
+        invokeScript.src = `//www.highperformanceformat.com/${config.key}/invoke.js`;
         invokeScript.async = true;
 
         // Append both scripts to the ad container
@@ -73,7 +101,7 @@ export function AdsterraAdUnit({ className = '' }: AdsterraAdUnitProps) {
         console.error('Error loading Adsterra ad:', error);
       }
     }
-  }, [consent.ads]);
+  }, [consent.ads, isMobile]);
 
   if (!consent.ads) return null;
 
@@ -84,8 +112,8 @@ export function AdsterraAdUnit({ className = '' }: AdsterraAdUnitProps) {
         style={{ 
           display: 'block',
           width: '100%',
-          height: '90px',
-          maxWidth: '728px',
+          height: isMobile ? '250px' : '90px',
+          maxWidth: isMobile ? '300px' : '728px',
           margin: '0 auto',
           textAlign: 'center'
         }}
