@@ -8,20 +8,16 @@ import Link from 'next/link';
 
 interface GratuityCalculatorPageProps {
   searchParams: Promise<{
-    basicSalary?: string;
-    da?: string;
+    monthlySalary?: string;
     yearsOfService?: string;
-    lastDrawnSalary?: string;
   }>;
 }
 
 export default async function GratuityCalculatorPage({ searchParams }: GratuityCalculatorPageProps) {
   const params = await searchParams;
   const initialValues = {
-    basicSalary: params.basicSalary ? parseFloat(params.basicSalary) : 50000,
-    da: params.da ? parseFloat(params.da) : 10000,
+    monthlySalary: params.monthlySalary ? parseFloat(params.monthlySalary) : 60000,
     yearsOfService: params.yearsOfService ? parseFloat(params.yearsOfService) : 5,
-    lastDrawnSalary: params.lastDrawnSalary ? parseFloat(params.lastDrawnSalary) : 60000,
   };
 
   const structuredData = {

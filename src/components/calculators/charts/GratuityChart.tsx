@@ -4,9 +4,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recha
 
 interface GratuityChartProps {
   data: {
-    basicSalary: number;
-    da: number;
-    totalSalary: number;
+    monthlySalary: number;
     yearsOfService: number;
     gratuityPerYear: number;
     totalGratuity: number;
@@ -17,13 +15,13 @@ interface GratuityChartProps {
 export function GratuityChart({ data }: GratuityChartProps) {
   const chartData = [
     {
-      name: 'Basic Salary',
-      value: data.basicSalary,
+      name: 'Monthly Salary',
+      value: data.monthlySalary,
       color: '#3B82F6',
     },
     {
-      name: 'Dearness Allowance',
-      value: data.da,
+      name: 'Gratuity per Year',
+      value: data.gratuityPerYear,
       color: '#8B5CF6',
     },
   ];
@@ -80,7 +78,7 @@ export function GratuityChart({ data }: GratuityChartProps) {
       
       <div className="mt-4 text-center">
         <p className="text-sm text-gray-600">
-          Total Salary: <span className="font-semibold">{formatCurrency(data.totalSalary)}</span>
+          Monthly Salary: <span className="font-semibold">{formatCurrency(data.monthlySalary)}</span>
         </p>
         <p className="text-sm text-gray-600">
           Years of Service: <span className="font-semibold">{data.yearsOfService} years</span>

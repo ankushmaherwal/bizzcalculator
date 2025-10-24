@@ -4,15 +4,12 @@ import { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
-import { Button } from '@/components/ui/Button';
-import { GratuityChart } from './charts/GratuityChart';
+// import { GratuityChart } from './charts/GratuityChart'; // Removed chart
 
 interface GratuityCalculatorProps {
   initialValues: {
-    basicSalary: number;
-    da: number;
+    monthlySalary: number;
     yearsOfService: number;
-    lastDrawnSalary: number;
   };
 }
 
@@ -22,9 +19,7 @@ interface GratuityResult {
   actualGratuity: number;
   formula: string;
   breakdown: {
-    basicSalary: number;
-    da: number;
-    totalSalary: number;
+    monthlySalary: number;
     yearsOfService: number;
     gratuityPerYear: number;
     totalGratuity: number;
@@ -33,15 +28,14 @@ interface GratuityResult {
 }
 
 export function GratuityCalculator({ initialValues }: GratuityCalculatorProps) {
-  const [basicSalary, setBasicSalary] = useState(initialValues.basicSalary);
-  const [da, setDa] = useState(initialValues.da);
+  const [monthlySalary, setMonthlySalary] = useState(initialValues.monthlySalary);
   const [yearsOfService, setYearsOfService] = useState(initialValues.yearsOfService);
-  const [lastDrawnSalary, setLastDrawnSalary] = useState(initialValues.lastDrawnSalary);
   const [result, setResult] = useState<GratuityResult | null>(null);
 
   const calculateGratuity = useCallback(() => {
-    const totalSalary = basicSalary + da;
-    const gratuityPerYear = totalSalary / 26; // 26 working days in a month
+    // Using the correct formula: G = n*b*15/26
+    // where n = years of service, b = monthly salary (basic + DA)
+    const gratuityPerYear = (monthlySalary * 15) / 26; // 15 days salary per year
     const totalGratuity = gratuityPerYear * yearsOfService;
     const maximumGratuity = 2000000; // Maximum gratuity limit as per Indian law
     const actualGratuity = Math.min(totalGratuity, maximumGratuity);
@@ -50,11 +44,9 @@ export function GratuityCalculator({ initialValues }: GratuityCalculatorProps) {
       gratuityAmount: actualGratuity,
       maximumGratuity,
       actualGratuity,
-      formula: `Gratuity = (Basic Salary + DA) / 26 × Years of Service`,
+      formula: `Gratuity = Years of Service × Monthly Salary × 15 / 26`,
       breakdown: {
-        basicSalary,
-        da,
-        totalSalary,
+        monthlySalary,
         yearsOfService,
         gratuityPerYear,
         totalGratuity,
@@ -63,7 +55,7 @@ export function GratuityCalculator({ initialValues }: GratuityCalculatorProps) {
     };
 
     setResult(gratuityResult);
-  }, [basicSalary, da, yearsOfService]);
+  }, [monthlySalary, yearsOfService]);
 
   useEffect(() => {
     calculateGratuity();
@@ -92,27 +84,16 @@ export function GratuityCalculator({ initialValues }: GratuityCalculatorProps) {
         <CardContent className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="basicSalary">Basic Salary (₹)</Label>
+              <Label htmlFor="monthlySalary">Monthly Salary (₹)</Label>
               <Input
-                id="basicSalary"
+                id="monthlySalary"
                 type="number"
-                value={basicSalary}
-                onChange={(e) => setBasicSalary(Number(e.target.value))}
-                placeholder="Enter basic salary"
+                value={monthlySalary || ''}
+                onChange={(e) => setMonthlySalary(Number(e.target.value) || 0)}
+                placeholder="Enter monthly salary (Basic + DA)"
                 className="text-lg"
               />
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="da">Dearness Allowance (₹)</Label>
-              <Input
-                id="da"
-                type="number"
-                value={da}
-                onChange={(e) => setDa(Number(e.target.value))}
-                placeholder="Enter DA amount"
-                className="text-lg"
-              />
+              <p className="text-sm text-gray-500">Basic Salary + Dearness Allowance</p>
             </div>
             
             <div className="space-y-2">
@@ -120,40 +101,22 @@ export function GratuityCalculator({ initialValues }: GratuityCalculatorProps) {
               <Input
                 id="yearsOfService"
                 type="number"
-                value={yearsOfService}
-                onChange={(e) => setYearsOfService(Number(e.target.value))}
+                value={yearsOfService || ''}
+                onChange={(e) => setYearsOfService(Number(e.target.value) || 0)}
                 placeholder="Enter years of service"
                 className="text-lg"
                 min="0"
                 step="0.5"
               />
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="lastDrawnSalary">Last Drawn Salary (₹)</Label>
-              <Input
-                id="lastDrawnSalary"
-                type="number"
-                value={lastDrawnSalary}
-                onChange={(e) => setLastDrawnSalary(Number(e.target.value))}
-                placeholder="Enter last drawn salary"
-                className="text-lg"
-              />
+              <p className="text-sm text-gray-500">Number of years worked in the organization</p>
             </div>
           </div>
-          
-          <Button 
-            onClick={calculateGratuity}
-            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-          >
-            Calculate Gratuity
-          </Button>
         </CardContent>
       </Card>
 
       {/* Results Section */}
       {result && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 gap-8">
           {/* Summary Card */}
           <Card className="bg-gradient-to-br from-green-50 to-blue-50 border-green-200">
             <CardHeader>
@@ -169,8 +132,8 @@ export function GratuityCalculator({ initialValues }: GratuityCalculatorProps) {
               
               <div className="space-y-3">
                 <div className="flex justify-between items-center py-2 border-b border-green-200">
-                  <span className="text-gray-600">Basic Salary + DA:</span>
-                  <span className="font-semibold">{formatCurrency(result.breakdown.totalSalary)}</span>
+                  <span className="text-gray-600">Monthly Salary:</span>
+                  <span className="font-semibold">{formatCurrency(result.breakdown.monthlySalary)}</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-green-200">
                   <span className="text-gray-600">Years of Service:</span>
@@ -187,16 +150,6 @@ export function GratuityCalculator({ initialValues }: GratuityCalculatorProps) {
               </div>
             </CardContent>
           </Card>
-
-          {/* Chart Card */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-xl font-bold text-gray-800">Gratuity Breakdown</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <GratuityChart data={result.breakdown} />
-            </CardContent>
-          </Card>
         </div>
       )}
 
@@ -208,10 +161,10 @@ export function GratuityCalculator({ initialValues }: GratuityCalculatorProps) {
         <CardContent>
           <div className="bg-white p-4 rounded-lg border">
             <p className="text-lg font-mono text-gray-800 mb-2">
-              Gratuity = (Basic Salary + DA) / 26 × Years of Service
+              Gratuity = Years of Service × Monthly Salary × 15 / 26
             </p>
             <p className="text-sm text-gray-600">
-              Where 26 represents the number of working days in a month
+              Where 15 represents days of salary per year, 26 represents working days in a month
             </p>
           </div>
         </CardContent>
