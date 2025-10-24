@@ -2,9 +2,10 @@ import { Suspense } from 'react';
 import { Navigation } from '@/components/Navigation';
 import { SEO } from '@/components/SEO';
 import { EMICalculator } from '@/components/calculators/EMICalculator';
+import { AdUnit } from '@/components/AdUnit';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
-import { BarChart3, TrendingUp, ArrowRight } from 'lucide-react';
+import { BarChart3, TrendingUp, ArrowRight, Gift } from 'lucide-react';
 import { CALCULATOR_PAGES } from '@/constants/seo';
 
 interface HomePageProps {
@@ -62,6 +63,13 @@ export default async function HomePage({ searchParams }: HomePageProps) {
       
       <Navigation />
       
+      {/* Ad after header */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div className="flex justify-center">
+          <AdUnit className="max-w-4xl w-full" />
+        </div>
+      </div>
+      
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/20 p-8 mb-16">
           <Suspense fallback={
@@ -79,6 +87,13 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           </Suspense>
         </div>
 
+        {/* Center ad */}
+        <div className="mt-16 mb-16">
+          <div className="flex justify-center">
+            <AdUnit className="max-w-4xl w-full" />
+          </div>
+        </div>
+
         {/* Other Calculators Section */}
         <div className="mt-16">
           <h2 className="text-3xl font-bold text-center bg-gradient-to-r from-slate-700 to-slate-900 bg-clip-text text-transparent mb-12">
@@ -86,7 +101,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
             {CALCULATOR_PAGES.filter(page => page.path !== '/').map((calculator, index) => {
-              const icons = [BarChart3, TrendingUp, BarChart3];
+              const icons = [BarChart3, TrendingUp, BarChart3, Gift];
               const Icon = icons[index];
               
               return (

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { ConsentManager } from './ConsentManager';
 import { GoogleAnalytics } from './GoogleAnalytics';
+import { AdsterraAds } from './AdsterraAds';
 
 interface ConsentWrapperProps {
   children: React.ReactNode;
@@ -35,6 +36,7 @@ export function ConsentWrapper({ children }: ConsentWrapperProps) {
         gaId={process.env.NEXT_PUBLIC_GA_ID || ''} 
         consent={consent.analytics} 
       />
+      <AdsterraAds consent={consent.ads} />
       {children}
     </>
   );

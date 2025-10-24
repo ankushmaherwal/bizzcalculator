@@ -1,6 +1,6 @@
 export const SITE_CONFIG = {
   name: 'BizCalculator',
-  description: 'Professional business calculators for EMI, ROI, business valuation, and break-even analysis. Free online financial tools for entrepreneurs and businesses.',
+  description: 'Professional business calculators for EMI, ROI, business valuation, break-even analysis, and gratuity calculation. Free online financial tools for entrepreneurs and businesses.',
   url: 'https://bizcalculator.com',
   ogImage: 'https://bizcalculator.com/og-image.jpg',
   links: {
@@ -33,6 +33,12 @@ export const CALCULATOR_PAGES = [
     description: 'Determine your break-even point for products and services with fixed and variable cost analysis.',
     path: '/break-even-analysis',
     keywords: ['break even calculator', 'break even analysis', 'cost analysis', 'profitability'],
+  },
+  {
+    title: 'Gratuity Calculator',
+    description: 'Calculate gratuity amount based on salary and years of service as per Indian labor laws.',
+    path: '/gratuity-calculator',
+    keywords: ['gratuity calculator', 'employee gratuity', 'gratuity calculation', 'retirement benefits'],
   },
 ];
 

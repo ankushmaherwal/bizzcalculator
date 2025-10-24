@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Calculator, BarChart3, TrendingUp, DollarSign } from 'lucide-react';
+import { Calculator, BarChart3, TrendingUp, DollarSign, Gift } from 'lucide-react';
 import { Button } from './ui/Button';
 
 export function Navigation() {
@@ -71,6 +71,17 @@ export function Navigation() {
             >
               <BarChart3 className="h-4 w-4" />
               <span>Break-Even Analysis</span>
+            </Link>
+            <Link 
+              href="/gratuity-calculator" 
+              className={`flex items-center space-x-1 transition-colors duration-200 ${
+                isActive('/gratuity-calculator') 
+                  ? 'text-blue-600 font-semibold' 
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              <Gift className="h-4 w-4" />
+              <span>Gratuity Calculator</span>
             </Link>
           </div>
           
